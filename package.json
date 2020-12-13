@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
-  "version": "0.0.3",
-  "description": "Node.js boilerplate package",
+  "version": "1.0.0",
+  "description": "My second project on Hexlet",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hexlet-boilerplates/nodejs-package.git"
+    "url": "https://github.com/Ingo-o/frontend-project-lvl2"
   },
-  "author": "Kirill Mokevnin",
+  "author": "Dmitry Ingo Epikhin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hexlet-boilerplates/nodejs-package/issues"
+    "url": "https://github.com/Ingo-o/frontend-project-lvl2/issues"
   },
   "type": "module",
   "jest": {
     "testEnvironment": "node",
     "transform": {}
   },
-  "homepage": "https://github.com/hexlet-boilerplates/nodejs-package#readme",
+  "homepage": "https://github.com/Ingo-o/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^6.2.0",
     "debug": "^4.2.0",
