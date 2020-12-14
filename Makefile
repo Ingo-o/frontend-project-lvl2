@@ -12,3 +12,6 @@ lint:
 
 test:
 	npm test
+
+help:
+	bin/gendiff.js -h
