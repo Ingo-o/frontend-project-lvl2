@@ -13,5 +13,9 @@ lint:
 test:
 	npm test
 
-help:
-	bin/gendiff.js -h
+f-rel:
+	bin/getdiff.js ../test-files/file1.json ../test-files/file2.json
+
+f-abs:
+	bin/getdiff.js /home/ingo/IT/test-files/file1.json /home/ingo/IT/test-files/file2.json	
+
