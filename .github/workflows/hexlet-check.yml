@@ -22,11 +22,11 @@ jobs:
       - name: npm install
         run: make install
 
-      - name: Run linter
-        run: make lint
-
       - name: Run tests
         run: make test
+
+      - name: Run linter
+        run: make lint
 
       - name: Hexlet project check
         uses: hexlet/project-action@release
