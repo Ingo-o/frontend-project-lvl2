@@ -11,13 +11,19 @@ name: hexlet-check
 on:
   push:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Run linter
+        run: make lint
+
+      - name: Run tests
+        run: make test
 
       - name: Hexlet project check
         uses: hexlet/project-action@release

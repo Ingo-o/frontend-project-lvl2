@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Ingo-o/frontend-project-lvl2#readme",
   "dependencies": {
+    "@babel/preset-typescript": "^7.12.7",
     "commander": "^6.2.0",
     "debug": "^4.2.0",
     "lodash": "^4.17.20"

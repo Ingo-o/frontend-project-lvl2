@@ -25,7 +25,7 @@ const getDiff = (filepath1, filepath2) => {
     }
   }
 
-  return `{\n${result}\n}`;
+  return `{\n${result}}`;
 };
 
 export default getDiff;
