@@ -25,11 +25,16 @@ jobs:
       - name: Run tests
         run: make test
 
-      - name: Run tests coverage
-        run: make test-coverage
-
       - name: Run linter
         run: make lint
+
+      - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: b61fee5507c1b486dda501fa10e183c6a1e4289b1ca0e85c9e3ac0d6a11a5c88
+        with:
+          coverageCommand: make test-coverage
+          debug: true
 
       - name: Hexlet project check
         uses: hexlet/project-action@release
