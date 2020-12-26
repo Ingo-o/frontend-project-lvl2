@@ -15,7 +15,7 @@ const getDiff = (filepath1, filepath2) => {
 
   let result = '';
 
-  for (const key of jointKeys) {
+  jointKeys.forEach((key) => {
     if (keys2.includes(key) && keys1.includes(key)) {
       result += file1[key] === file2[key] ? `    ${key}: ${file1[key]}\n` : `  - ${key}: ${file1[key]}\n  + ${key}: ${file2[key]}\n`;
     } else if (keys2.includes(key) && !keys1.includes(key)) {
@@ -23,7 +23,7 @@ const getDiff = (filepath1, filepath2) => {
     } else if (keys1.includes(key) && !keys2.includes(key)) {
       result += `  - ${key}: ${file1[key]}\n`;
     }
-  }
+  });
 
   return `{\n${result}}`;
 };
