@@ -1,11 +1,9 @@
-import fs from 'fs';
-import path from 'path';
 import _ from 'lodash';
+import parser from './parser.js';
 
 const getDiff = (filepath1, filepath2) => {
-  // Преобразуем путь до файла в абсолютный => читаем файл => преобразуем в JS-объект (парсим)
-  const file1 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath1)));
-  const file2 = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), filepath2)));
+  const file1 = parser(filepath1);
+  const file2 = parser(filepath2);
 
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
