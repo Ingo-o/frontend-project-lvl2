@@ -17,8 +17,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       - name: Installation
         run: make install
 
@@ -36,6 +34,7 @@ jobs:
           coverageCommand: make test-coverage
           debug: true
 
+      - uses: actions/checkout@v2
       - name: Hexlet project check
         uses: hexlet/project-action@release
         with:
