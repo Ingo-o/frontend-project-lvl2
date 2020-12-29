@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import parser from './parser.js';
+import parsers from './parsers.js';
 
 const getDiff = (filepath1, filepath2) => {
-  const file1 = parser(filepath1);
-  const file2 = parser(filepath2);
+  const file1 = parsers(filepath1);
+  const file2 = parsers(filepath2);
 
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);

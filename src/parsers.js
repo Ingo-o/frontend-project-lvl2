@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 
-const parser = (pathToFile) => {
+const parsers = (pathToFile) => {
   const absolutePath = path.resolve(process.cwd(), pathToFile); // преобразуем путь в абсолютный
   const format = path.extname(absolutePath); // расширение файла
   const data = fs.readFileSync(pathToFile); // читаем файл
@@ -18,4 +18,4 @@ const parser = (pathToFile) => {
   return parse(data);
 };
 
-export default parser;
+export default parsers;
