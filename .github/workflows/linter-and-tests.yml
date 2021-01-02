@@ -9,17 +9,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Installation
+      - name: clone my repo
+        uses: actions/checkout@v2
+
+      - name: installation
         run: make install
 
-      - name: Run tests
+      - name: run tests
         run: make test
 
-      - name: Run linter
+      - name: run linter
         run: make lint
 
-      - name: Test & publish code coverage
+      - name: test & publish code coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.TEST_COVERAGE_CODE_CLIMATE_REPORTER_ID }}
