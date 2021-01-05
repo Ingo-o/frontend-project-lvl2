@@ -2,6 +2,7 @@
 
 import program from 'commander';
 import getDiff from '../src/index.js';
+import parsers from '../src/parsers.js';
 
 program
   .version('1.0.0')
@@ -9,7 +10,7 @@ program
   .arguments('<filepath1> <filepath2>')
   .option('-f, --format [type]', 'output format')
   .action((filepath1, filepath2) => {
-    console.log(getDiff(filepath1, filepath2));
+    console.log(getDiff(parsers(filepath1), parsers(filepath2)));
   });
 
 program.parse(process.argv);
