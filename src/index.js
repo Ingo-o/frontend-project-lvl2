@@ -2,8 +2,6 @@ import _ from 'lodash';
 
 const getDiff = (file1, file2) => {
 
-  console.log(file1);
-  
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
 
@@ -22,7 +20,7 @@ const getDiff = (file1, file2) => {
       // Ключ есть в обоих
     } else if (keys1.includes(key) && keys2.includes(key)) {
         if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-          result.push({name: key, type: 'PARENT', value: getDiff(file1.key, file2.key)});
+          result.push({name: key, type: 'PARENT', value: getDiff(file1[key], file2[key])});
         } else if (file1.key === file2.key) {
           result.push({name: key, type: 'UNCHANGED', value: file1[key]});
         } else if (file1.key !== file2.key) {
@@ -31,7 +29,7 @@ const getDiff = (file1, file2) => {
     }
   });
 
-  return JSON.stringify(result, null, 4);
+  return result;
   
 };
 
