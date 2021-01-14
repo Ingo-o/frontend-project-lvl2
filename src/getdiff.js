@@ -21,9 +21,9 @@ const getDiff = (file1, file2) => {
     } else if (keys1.includes(key) && keys2.includes(key)) {
         if (_.isObject(file1[key]) && _.isObject(file2[key])) {
           result.push({name: key, type: 'PARENT', value: getDiff(file1[key], file2[key])});
-        } else if (file1.key === file2.key) {
+        } else if (file1[key] === file2[key]) {
           result.push({name: key, type: 'UNCHANGED', value: file1[key]});
-        } else if (file1.key !== file2.key) {
+        } else if (file1[key] !== file2[key]) {
           result.push({name: key, type: 'CHANGED', oldValue: file1[key], newValue: file2[key]});
         }
     }
