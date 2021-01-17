@@ -7,4 +7,3 @@ export default (filepath1, filepath2, formatName = 'stylish') => {
   const file2 = parsers(filepath2);
   return format(getDiff(file1, file2));
 };
-
