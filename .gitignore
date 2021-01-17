@@ -1,5 +1,4 @@
 /node_modules/
 coverage
 .vscode
-TMP-comparing.txt
-TMP-example.txt
+temp
