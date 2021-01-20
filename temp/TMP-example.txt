@@ -2,7 +2,7 @@
   {
     "name": "common",
     "type": "PARENT",
-    "value": [
+    "children": [
       {
         "name": "follow",
         "type": "ADDED",
@@ -39,11 +39,11 @@
       {
         "name": "setting6",
         "type": "PARENT",
-        "value": [
+        "children": [
           {
             "name": "doge",
             "type": "PARENT",
-            "value": [
+            "children": [
               {
                 "name": "wow",
                 "type": "CHANGED",
@@ -69,7 +69,7 @@
   {
     "name": "group1",
     "type": "PARENT",
-    "value": [
+    "children": [
       {
         "name": "baz",
         "type": "CHANGED",
