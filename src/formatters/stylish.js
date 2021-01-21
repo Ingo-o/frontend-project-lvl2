@@ -5,6 +5,7 @@ const plusGap = '  + ';
 const minusGap = '  - ';
 const neutralGap = '    ';
 
+// Вспомогательная функция для обработки значений
 const valueFormatter = (value, depth) => {
   if (!_.isObject(value)) {
     return value;
@@ -15,8 +16,11 @@ const valueFormatter = (value, depth) => {
   return `{\n${formattedValue.join('\n')}\n${depthIndent(depth + 1)}}`;
 };
 
+// Функция формирует stylish-вывод в консоль на основе результата из getDiff
 const formatter = (data, depth = 0) => {
-  const formattedData = data.map(({ name, type, value, oldValue, newValue, children }) => {
+  const formattedData = data.map(({
+    name, type, value, oldValue, newValue, children,
+  }) => {
     if (type === 'ADDED') {
       return `${depthIndent(depth)}${plusGap}${name}: ${valueFormatter(value, depth)}`;
     } if (type === 'REMOVED') {
@@ -25,9 +29,9 @@ const formatter = (data, depth = 0) => {
       return `${depthIndent(depth)}${neutralGap}${name}: ${valueFormatter(value, depth)}`;
     } if (type === 'CHANGED') {
       return `${depthIndent(depth)}${minusGap}${name}: ${valueFormatter(oldValue, depth)}\n${depthIndent(depth)}${plusGap}${name}: ${valueFormatter(newValue, depth)}`;
-    } if (type === 'PARENT') {
-      return `${depthIndent(depth)}${neutralGap}${name}: ${formatter(children, depth + 1)}`;
     }
+    // if (type === 'PARENT') - дефолтное условие что бы линтер не ругался :-\
+    return `${depthIndent(depth)}${neutralGap}${name}: ${formatter(children, depth + 1)}`;
   });
 
   return `{\n${formattedData.join('\n')}\n${depthIndent(depth)}}`;

@@ -1,29 +1,37 @@
 import _ from 'lodash';
 
-const getDiff = (file1, file2) => {
-  const keys1 = Object.keys(file1);
-  const keys2 = Object.keys(file2);
+// Функция высчитывает разницу между двумя объектами
+const getDiff = (obj1, obj2) => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
 
-  // Объединяем ключи в один массив => удаляем повторяющиеся => сортируем
+  // Объединяем ключи из двух объектов в один массив => удаляем повторяющиеся => сортируем
   const jointKeys = _.sortBy(_.uniq(keys1.concat(keys2)));
 
   const result = [];
 
   jointKeys.forEach((key) => {
-    // Ключ есть во втором, а в первом нет (ADDED)
-    if (keys2.includes(key) && !keys1.includes(key)) {
-      result.push({ name: key, type: 'ADDED', value: file2[key] });
-      // Ключ есть в первом, а во втором нет (REMOVED)
-    } else if (keys1.includes(key) && !keys2.includes(key)) {
-      result.push({ name: key, type: 'REMOVED', value: file1[key] });
-      // Ключ есть в обоих
-    } else if (keys1.includes(key) && keys2.includes(key)) {
-      if (_.isObject(file1[key]) && _.isObject(file2[key])) {
-        result.push({ name: key, type: 'PARENT', children: getDiff(file1[key], file2[key]) });
-      } else if (file1[key] === file2[key]) {
-        result.push({ name: key, type: 'UNCHANGED', value: file1[key] });
-      } else if (file1[key] !== file2[key]) {
-        result.push({ name: key, type: 'CHANGED', oldValue: file1[key], newValue: file2[key] });
+    if (keys2.includes(key) && !keys1.includes(key)) { // ДОБАВЛЕН
+      result.push({
+        name: key, type: 'ADDED', value: obj2[key],
+      });
+    } else if (keys1.includes(key) && !keys2.includes(key)) { // УДАЛЁН
+      result.push({
+        name: key, type: 'REMOVED', value: obj1[key],
+      });
+    } else if (keys1.includes(key) && keys2.includes(key)) { // Ключ есть в обоих объектах
+      if (_.isObject(obj1[key]) && _.isObject(obj2[key])) { // РОДИТЕЛЬ
+        result.push({
+          name: key, type: 'PARENT', children: getDiff(obj1[key], obj2[key]),
+        });
+      } else if (obj1[key] === obj2[key]) { // НЕ ИЗМЕНЁН
+        result.push({
+          name: key, type: 'UNCHANGED', value: obj1[key],
+        });
+      } else if (obj1[key] !== obj2[key]) { // ИЗМЕНЁН
+        result.push({
+          name: key, type: 'CHANGED', oldValue: obj1[key], newValue: obj2[key],
+        });
       }
     }
   });

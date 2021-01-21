@@ -3,9 +3,9 @@ import path from 'path';
 import yaml from 'js-yaml';
 
 const parsers = (pathToFile) => {
-  const absolutePath = path.resolve(process.cwd(), pathToFile); // преобразуем путь в абсолютный
-  const format = path.extname(absolutePath); // расширение файла
-  const data = fs.readFileSync(pathToFile); // читаем файл
+  const absolutePath = path.resolve(process.cwd(), pathToFile); // Преобразование пути до файла в абсолютный
+  const format = path.extname(absolutePath); // Расширение файла
+  const data = fs.readFileSync(pathToFile); // Чтение файла
 
   // Выбирается функция-парсер в зависимости от расширения файла
   let parse;
