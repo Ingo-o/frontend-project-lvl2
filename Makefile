@@ -19,3 +19,9 @@ test-coverage:
 diff:
 	bin/getdiff.js __fixtures__/1.yaml __fixtures__/2.json
 
+diff-p:
+	bin/getdiff.js -f plain __fixtures__/1.yaml __fixtures__/2.json
+
+
+
+
