@@ -30,7 +30,7 @@ const formatter = (data, depth = 0) => {
     } if (type === 'CHANGED') {
       return `${depthIndent(depth)}${minusGap}${name}: ${valueFormatter(oldValue, depth)}\n${depthIndent(depth)}${plusGap}${name}: ${valueFormatter(newValue, depth)}`;
     }
-    // if (type === 'PARENT') - дефолтное условие что бы линтер не ругался :-\
+    // if (type === 'PARENT')
     return `${depthIndent(depth)}${neutralGap}${name}: ${formatter(children, depth + 1)}`;
   });
 

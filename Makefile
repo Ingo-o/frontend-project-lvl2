@@ -16,7 +16,7 @@ test:
 test-coverage:
 	npx -n --experimental-vm-modules jest --coverage
 
-diff:
+diff-s:
 	bin/getdiff.js __fixtures__/1.yaml __fixtures__/2.json
 
 diff-p:

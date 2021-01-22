@@ -11,20 +11,22 @@ const valueFormatter = (value) => {
 };
 
 // Функция формирует plain-вывод в консоль на основе результата из getDiff
-const formatter = (data) => {
+const formatter = (data, path = []) => {
   const formattedData = data.map(({
     name, type, value, oldValue, newValue, children,
   }) => {
+    const addNameToPath = [...path, name];
+    const actualPath = addNameToPath.join('.');
     if (type === 'ADDED') {
-      return `Property '${name}' was added with value: ${valueFormatter(value)}`;
+      return `Property '${actualPath}' was added with value: ${valueFormatter(value)}`;
     } if (type === 'REMOVED') {
-      return `Property '${name}' was removed`;
+      return `Property '${actualPath}' was removed`;
     } if (type === 'CHANGED') {
-      return `Property '${name}' was updated. From ${valueFormatter(oldValue)} to ${valueFormatter(newValue)}`;
+      return `Property '${actualPath}' was updated. From ${valueFormatter(oldValue)} to ${valueFormatter(newValue)}`;
     } if (type === 'PARENT') {
-      return `${formatter(children)}`;
+      return `${formatter(children, addNameToPath)}`;
     }
-
+    // if (type === 'UNCHANGED')
     return 'The enemies of the Emperor shall be destroyed!';
   })
     .filter((elem) => elem !== 'The enemies of the Emperor shall be destroyed!');
