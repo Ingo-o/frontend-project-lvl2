@@ -18,20 +18,19 @@ const valueFormatter = (value, depth) => {
 
 // Функция формирует stylish-вывод в консоль на основе результата из getDiff
 const formatter = (data, depth = 0) => {
-  const formattedData = data.map(({
-    name, type, value, oldValue, newValue, children,
-  }) => {
-    if (type === 'ADDED') {
-      return `${depthIndent(depth)}${plusGap}${name}: ${valueFormatter(value, depth)}`;
-    } if (type === 'REMOVED') {
-      return `${depthIndent(depth)}${minusGap}${name}: ${valueFormatter(value, depth)}`;
-    } if (type === 'UNCHANGED') {
-      return `${depthIndent(depth)}${neutralGap}${name}: ${valueFormatter(value, depth)}`;
-    } if (type === 'CHANGED') {
-      return `${depthIndent(depth)}${minusGap}${name}: ${valueFormatter(oldValue, depth)}\n${depthIndent(depth)}${plusGap}${name}: ${valueFormatter(newValue, depth)}`;
+  const formattedData = data.map((node) => {
+    if (node.type === 'ADDED') {
+      return `${depthIndent(depth)}${plusGap}${node.name}: ${valueFormatter(node.value, depth)}`;
+    } if (node.type === 'REMOVED') {
+      return `${depthIndent(depth)}${minusGap}${node.name}: ${valueFormatter(node.value, depth)}`;
+    } if (node.type === 'UNCHANGED') {
+      return `${depthIndent(depth)}${neutralGap}${node.name}: ${valueFormatter(node.value, depth)}`;
+    } if (node.type === 'CHANGED') {
+      return `${depthIndent(depth)}${minusGap}${node.name}: ${valueFormatter(node.oldValue, depth)}\n${depthIndent(depth)}${plusGap}${node.name}: ${valueFormatter(node.newValue, depth)}`;
+    } if (node.type === 'PARENT') {
+      return `${depthIndent(depth)}${neutralGap}${node.name}: ${formatter(node.children, depth + 1)}`;
     }
-    // if (type === 'PARENT')
-    return `${depthIndent(depth)}${neutralGap}${name}: ${formatter(children, depth + 1)}`;
+    throw new Error('Unknown type');
   });
 
   return `{\n${formattedData.join('\n')}\n${depthIndent(depth)}}`;

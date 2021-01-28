@@ -1,1 +1,1 @@
-export default (data) => JSON.stringify(data, null, 2).slice(2, -2);
+export default (data) => JSON.stringify(data).slice(1, -1);

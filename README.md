@@ -11,7 +11,9 @@ Implied that you have already installed Node.js 🤓
 
 ## How to use:
 
-This program calculates the difference between two **_json of yaml(yml)_** structures and outputs the report to the console. Write in your console `getdiff` + **_2 paths to files_** you want to compare. You can optionally choose one of three formatters: `stylish`(used by default), `plain` or `json`. Good luck! 🍀
+This program calculates the difference between two **_json_** or **_yaml(yml)_** structures and outputs the report to the console. Write in your console `getdiff` + **_2 paths to files_** you want to compare. You can optionally choose one of three formatters: `stylish`(used by default), `plain` or `json`.
+
+Good luck! 🍀
 
 ## Video demonstrations:
 

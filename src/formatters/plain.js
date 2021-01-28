@@ -11,27 +11,30 @@ const valueFormatter = (value) => {
 };
 
 // Функция формирует plain-вывод в консоль на основе результата из getDiff
-const formatter = (data, path = []) => {
-  const formattedData = data.map(({
-    name, type, value, oldValue, newValue, children,
-  }) => {
-    const addNameToPath = [...path, name];
-    const actualPath = addNameToPath.join('.');
-    if (type === 'ADDED') {
-      return `Property '${actualPath}' was added with value: ${valueFormatter(value)}`;
-    } if (type === 'REMOVED') {
-      return `Property '${actualPath}' was removed`;
-    } if (type === 'CHANGED') {
-      return `Property '${actualPath}' was updated. From ${valueFormatter(oldValue)} to ${valueFormatter(newValue)}`;
-    } if (type === 'PARENT') {
-      return `${formatter(children, addNameToPath)}`;
-    }
-    // if (type === 'UNCHANGED')
-    return 'The enemies of the Emperor shall be destroyed!';
-  })
-    .filter((elem) => elem !== 'The enemies of the Emperor shall be destroyed!');
+const formatter = (data) => {
+  const innerFormatter = (innerData, path = []) => {
+    const formattedData = innerData.map((node) => {
+      const pathElements = [...path, node.name];
+      const actualPath = pathElements.join('.');
+      if (node.type === 'ADDED') {
+        return `Property '${actualPath}' was added with value: ${valueFormatter(node.value)}`;
+      } if (node.type === 'REMOVED') {
+        return `Property '${actualPath}' was removed`;
+      } if (node.type === 'CHANGED') {
+        return `Property '${actualPath}' was updated. From ${valueFormatter(node.oldValue)} to ${valueFormatter(node.newValue)}`;
+      } if (node.type === 'PARENT') {
+        return `${innerFormatter(node.children, pathElements)}`;
+      } if (node.type === 'UNCHANGED') {
+        return null;
+      }
+      throw new Error('Unknown type');
+    })
+      .filter((elem) => elem !== null);
 
-  return `${formattedData.join('\n')}`;
+    return `${formattedData.join('\n')}`;
+  };
+
+  return innerFormatter(data);
 };
 
 export default formatter;
