@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// commander.js - библиотека для создания утилит командной строки
 import program from 'commander';
 import getDiff from '../src/index.js';
 

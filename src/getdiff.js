@@ -13,15 +13,18 @@ const getDiff = (obj1, obj2) => {
       return {
         name: key, type: 'ADDED', value: obj2[key],
       };
-    } if (!_.has(obj2, key)) { // УДАЛЁН
+    }
+    if (!_.has(obj2, key)) { // УДАЛЁН
       return {
         name: key, type: 'REMOVED', value: obj1[key],
       };
-    } if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) { // РОДИТЕЛЬ
+    }
+    if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) { // РОДИТЕЛЬ
       return {
         name: key, type: 'PARENT', children: getDiff(obj1[key], obj2[key]),
       };
-    } if (obj1[key] !== obj2[key]) { // ИЗМЕНЁН
+    }
+    if (obj1[key] !== obj2[key]) { // ИЗМЕНЁН
       return {
         name: key, type: 'CHANGED', oldValue: obj1[key], newValue: obj2[key],
       };

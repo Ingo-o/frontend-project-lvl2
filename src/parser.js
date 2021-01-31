@@ -1,13 +1,14 @@
 import yaml from 'js-yaml';
 
-// Выбирается парсер в зависимости от расширения
-const parser = (extension) => {
-  if (extension === '.json') {
-    return JSON.parse;
-  } if (extension === '.yml' || extension === '.yaml') {
-    return yaml.safeLoad;
+// Выбираем и запускаем парсер
+const parser = (dataFormat, data) => {
+  if (dataFormat === 'json') {
+    return JSON.parse(data);
   }
-  throw new Error(`${extension} extension is not supported. Acceptable extensions are json and yaml(yml)`);
+  if (dataFormat === 'yml' || dataFormat === 'yaml') {
+    return yaml.safeLoad(data);
+  }
+  throw new Error(`"${dataFormat}" format is not supported. Acceptable formats are "json", "yaml" or "yml")`);
 };
 
 export default parser;

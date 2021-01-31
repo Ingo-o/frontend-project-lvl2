@@ -18,16 +18,20 @@ const formatter = (data) => {
       const actualPath = pathElements.join('.');
       if (node.type === 'ADDED') {
         return `Property '${actualPath}' was added with value: ${valueFormatter(node.value)}`;
-      } if (node.type === 'REMOVED') {
+      }
+      if (node.type === 'REMOVED') {
         return `Property '${actualPath}' was removed`;
-      } if (node.type === 'CHANGED') {
+      }
+      if (node.type === 'CHANGED') {
         return `Property '${actualPath}' was updated. From ${valueFormatter(node.oldValue)} to ${valueFormatter(node.newValue)}`;
-      } if (node.type === 'PARENT') {
+      }
+      if (node.type === 'PARENT') {
         return `${innerFormatter(node.children, pathElements)}`;
-      } if (node.type === 'UNCHANGED') {
+      }
+      if (node.type === 'UNCHANGED') {
         return null;
       }
-      throw new Error('Unknown type');
+      throw new Error(`"${node.type}" type is not supported by the formatter`);
     })
       .filter((elem) => elem !== null);
 

@@ -3,37 +3,57 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import getDiff from '../src/index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Получаем URL этого модуля и преобразуем его в путь
+const modulePath = fileURLToPath(import.meta.url);
 
-const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
+// Получаем путь до дирректории в которой лежит этот модуль
+const dirPath = dirname(modulePath);
 
-test('Two JSONs and default(stylish)-formatter', () => {
-  expect(getDiff('__fixtures__/1.json', '__fixtures__/2.json'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-stylish.txt'), 'utf-8'));
+// Получаем путь до фикстуры
+const getFixturePath = (filename) => join(dirPath, '..', '__fixtures__', filename);
+
+// Читаем фикстуры
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+const expectedStylish = readFile('expected-stylish.txt');
+const expectedPlain = readFile('expected-plain.txt');
+const expectedJson = readFile('expected-json.txt');
+
+test.each([
+  ['__fixtures__/1.json', '__fixtures__/2.json'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml'],
+  ['__fixtures__/1.json', '__fixtures__/2.yml'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.json'],
+])('Default(stylish)-formatter test', (filepath1, filepath2) => {
+  expect(getDiff(filepath1, filepath2))
+    .toEqual(expectedStylish);
 });
 
-test('JSON, YML and stylish-formatter', () => {
-  expect(getDiff('__fixtures__/1.json', '__fixtures__/2.yml', 'stylish'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-stylish.txt'), 'utf-8'));
+test.each([
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'stylish'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'stylish'],
+  ['__fixtures__/1.json', '__fixtures__/2.yml', 'stylish'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.json', 'stylish'],
+])('Stylish-formatter test', (filepath1, filepath2, formatName) => {
+  expect(getDiff(filepath1, filepath2, formatName))
+    .toEqual(expectedStylish);
 });
 
-test('Two YAMLs and plain-formatter', () => {
-  expect(getDiff('__fixtures__/1.yaml', '__fixtures__/2.yml', 'plain'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-plain.txt'), 'utf-8'));
+test.each([
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'plain'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'plain'],
+  ['__fixtures__/1.json', '__fixtures__/2.yml', 'plain'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.json', 'plain'],
+])('Plain-formatter test', (filepath1, filepath2, formatName) => {
+  expect(getDiff(filepath1, filepath2, formatName))
+    .toEqual(expectedPlain);
 });
 
-test('YAML, JSON and plain-formatter', () => {
-  expect(getDiff('__fixtures__/1.yaml', '__fixtures__/2.json', 'plain'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-plain.txt'), 'utf-8'));
-});
-
-test('Two JSONs and json-formatter', () => {
-  expect(getDiff('__fixtures__/1.json', '__fixtures__/2.json', 'json'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-json.txt'), 'utf-8'));
-});
-
-test('Two YAMLs and json-formatter', () => {
-  expect(getDiff('__fixtures__/1.yaml', '__fixtures__/2.yml', 'json'))
-    .toEqual(fs.readFileSync(getFixturePath('expected-json.txt'), 'utf-8'));
+test.each([
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'json'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'json'],
+  ['__fixtures__/1.json', '__fixtures__/2.yml', 'json'],
+  ['__fixtures__/1.yaml', '__fixtures__/2.json', 'json'],
+])('Json-formatter test', (filepath1, filepath2, formatName) => {
+  expect(getDiff(filepath1, filepath2, formatName))
+    .toEqual(expectedJson);
 });

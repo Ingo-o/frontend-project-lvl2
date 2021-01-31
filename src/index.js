@@ -5,27 +5,25 @@ import parser from './parser.js';
 import format from './formatters/index.js';
 
 export default (filepath1, filepath2, formatName = 'stylish') => {
-  // Преобразование путей до файлов в абсолютные
+  // Преобразуем пути до файлов в абсолютные
   const absolutePath1 = path.resolve(process.cwd(), filepath1);
   const absolutePath2 = path.resolve(process.cwd(), filepath2);
 
-  // Получение Расширений файлов
-  const extension1 = path.extname(absolutePath1);
-  const extension2 = path.extname(absolutePath2);
+  // Выясняем формат файлов
+  const dataFormat1 = path.extname(absolutePath1).slice(1);
+  const dataFormat2 = path.extname(absolutePath2).slice(1);
 
-  // Чтение файлов
+  // Читаем файлы
   const data1 = fs.readFileSync(absolutePath1);
   const data2 = fs.readFileSync(absolutePath2);
 
-  // Парсинг файлов в JS-объекты
-  const obj1 = parser(extension1)(data1);
-  const obj2 = parser(extension2)(data2);
+  // Парсим файлы в JS-объекты
+  const obj1 = parser(dataFormat1, data1);
+  const obj2 = parser(dataFormat2, data2);
 
-  // Выбор форматтера
-  const formatter = format(formatName);
-
-  // Формирование diff-файла
+  // Формируем diff-файл
   const diff = getDiff(obj1, obj2);
 
-  return formatter(diff);
+  // Выбираем и запускаем форматер
+  return format(formatName, diff);
 };
