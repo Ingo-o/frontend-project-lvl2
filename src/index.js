@@ -18,12 +18,12 @@ export default (filepath1, filepath2, formatName = 'stylish') => {
   const data2 = fs.readFileSync(absolutePath2);
 
   // Парсим файлы в JS-объекты
-  const obj1 = parser(dataFormat1, data1);
-  const obj2 = parser(dataFormat2, data2);
+  const obj1 = parser(data1, dataFormat1);
+  const obj2 = parser(data2, dataFormat2);
 
   // Формируем diff-файл
   const diff = getDiff(obj1, obj2);
 
   // Выбираем и запускаем форматер
-  return format(formatName, diff);
+  return format(diff, formatName);
 };
