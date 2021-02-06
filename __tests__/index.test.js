@@ -14,11 +14,25 @@ const getFixturePath = (filename) => join(dirPath, '..', '__fixtures__', filenam
 
 // Читаем фикстуры
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
+const expectedStylish = readFile('expected-stylish.txt');
+const expectedPlain = readFile('expected-plain.txt');
+const expectedJson = readFile('expected-json.txt');
 
 test.each([
-  ['__fixtures__/1.json', '__fixtures__/2.json', 'stylish', readFile('expected-stylish.txt')],
-  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'plain', readFile('expected-plain.txt')],
-  ['__fixtures__/1.json', '__fixtures__/2.yml', 'json', readFile('expected-json.txt')],
+  // JSON
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'stylish', expectedStylish],
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'plain', expectedPlain],
+  ['__fixtures__/1.json', '__fixtures__/2.json', 'json', expectedJson],
+
+  // YAML and YML
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'stylish', expectedStylish],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'plain', expectedPlain],
+  ['__fixtures__/1.yaml', '__fixtures__/2.yml', 'json', expectedJson],
+
+  // CROSSED
+  ['__fixtures__/1.json', '__fixtures__/2.yml', 'stylish', expectedStylish],
+  ['__fixtures__/1.yaml', '__fixtures__/2.json', 'plain', expectedPlain],
+
 ])('Difference calculator test', (filepath1, filepath2, formatName, expectedFile) => {
   expect(getDiff(filepath1, filepath2, formatName))
     .toEqual(expectedFile);
