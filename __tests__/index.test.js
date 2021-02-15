@@ -32,6 +32,7 @@ test.each([
   // CROSSED
   ['__fixtures__/1.json', '__fixtures__/2.yml', 'stylish', expectedStylish],
   ['__fixtures__/1.yaml', '__fixtures__/2.json', 'plain', expectedPlain],
+  ['__fixtures__/1.json', '__fixtures__/2.yml', 'json', expectedJson],
 
 ])('Difference calculator test', (filepath1, filepath2, formatName, expectedFile) => {
   expect(getDiff(filepath1, filepath2, formatName))
